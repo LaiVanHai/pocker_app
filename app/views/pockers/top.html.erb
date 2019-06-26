@@ -1,0 +1,21 @@
+<div class="page">
+  <div class="container">
+    <%= link_to("/") do %>
+      <div class="title">Check a Pocker Hand</div>
+    <% end %>
+    <div class="form">
+      <div class="form-content">
+        <%= form_tag ("/pockers/check") do %>
+          <div class="form-group">
+            <input type="text" placeholder="S10 H11 D12 C13 H1" name="card_list" value="<%= @pocker_card %>" class="form-control input-text">
+          </div>
+          <input type="submit" value="確認する" class="btn btn-primary btn-lg btn-block">
+          <% if @message != nil %>
+            <pre class="message-content"><%= @message %></pre>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+  <div class="footer">©Copyright 2019 PockerApp All Rights Reserved.</div>
+</div>

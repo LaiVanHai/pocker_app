@@ -1,0 +1,53 @@
+// Place all the styles related to the pockers controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+.page {
+  background-image: url("/background.jpg");
+  text-align: center;
+  /* Full height */
+  height: 100%;
+  /* Center and scale the image nicely */
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+
+  .title {
+    margin-top: 230px;
+    font-size: 60px;
+    color: #faebd7;
+    font-family: fantasy;
+  }
+
+  .form {
+    text-align: center;
+    background-color: #ffffff8a;
+    padding: 30px 30px;
+    margin: 0px 200px;
+  }
+}
+
+.input-text {
+  padding: 30px;
+  font-size: 30px;
+}
+
+.message-content {
+  text-align: left;
+  margin-top: 10px;
+  height: auto;
+  background-color: azure;
+  font-family: "メイリオ", sans-serif;
+  font-size: 15px;
+}
+
+.footer {
+  margin-top: 10px;
+  text-align: center;
+  color: aliceblue;
+  font-size: 15px;
+  font-family: fantasy;
+}
+
+body, html {
+  height: 100%;
+}
