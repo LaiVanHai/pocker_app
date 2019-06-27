@@ -36,6 +36,7 @@ gem 'jbuilder', '~> 2.5'
 gem 'bootstrap-sass'
 gem 'sass-rails', '~> 5.0'
 gem 'jquery-rails'
+gem 'grape'
 
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.1.0', require: false

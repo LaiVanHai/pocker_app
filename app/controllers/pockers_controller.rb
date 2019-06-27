@@ -1,18 +1,26 @@
 class PockersController < ApplicationController
-  before_action :checkCardNumber, {only: [:check]}
   def top
   end
 
   def check
     @pocker_card = params[:card_list]
-    pocker_list = @pocker_card
+    @message = checkPockerHand(@pocker_card)
+    render("pockers/top")
+  end
+
+  def checkPockerHand(pocker_list)
     suit_array = []
     s_array = []
     h_array = []
     d_array = []
     c_array = []
     pocker_number_array = []
-    @message = checkSuit(pocker_list).strip
+    @message = checkCardNumber(pocker_list)
+    if @message == ""
+      @message = checkSuit(pocker_list).strip
+    else
+      return @message
+    end
 
     if @message == ""
       pockers = pocker_list.split(" ")
@@ -72,18 +80,17 @@ class PockersController < ApplicationController
         end
       end
     end
-    render("pockers/top")
+    @message
   end
 
   private
 
-  def checkCardNumber
-    @pocker_card = params[:card_list]
-    pocker_list = @pocker_card
-    if pocker_list.strip.count(" ") != 4
+  def checkCardNumber(pocker_list)
+    @message = ""
+    if pocker_list.count(" ") != 4
       @message = "5つのカード指定文字を半角スペース区切りで入力してください。（例：S1 H3 D9 C13 S11)"
-      render("pockers/top")
     end
+    @message
   end
 
   def checkSuit(pocker_list)
@@ -102,7 +109,7 @@ class PockersController < ApplicationController
     unless respone_messages == ""
       respone_messages += "半角英字大文字のスート（S,H,D,C）と数字（1〜13）の組み合わせでカードを指定してください。"
     end
-    return respone_messages
+    respone_messages
   end
 
   def checkArrayContinuous(array_number) # array of element: 5
@@ -116,8 +123,7 @@ class PockersController < ApplicationController
         return false
       end
     end
-
-    return true
+    true
   end
 
   def checkGroup(array_number) # array of element: 5
