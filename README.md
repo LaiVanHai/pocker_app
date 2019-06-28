@@ -1,24 +1,15 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+* git clone https://github.com/LaiVanHai/pocker_app.git
 
-Things you may want to cover:
+* cd pocker_app
 
-* Ruby version
+* bundle install
 
-* System dependencies
+* rails s
 
-* Configuration
+* Web app: http://localhost:3000/
 
-* Database creation
+* API: http://localhost:3000/api/pockers
 
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+![algorithm](public/algorithm.png)
