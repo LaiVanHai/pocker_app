@@ -7,12 +7,11 @@ module PockersHelper
     pocker_number_array = [] #５カードにナンバーを保存する
 
     @message = checkCardNumber(pocker_list)
+    return @message unless @message.blank?
 
-    if @message == ""
-      @message = checkSuit(pocker_list).strip
-    else
-      return @message
-    end
+    @message = checkSuit(pocker_list)
+
+    @message += "半角英字大文字のスート（S,H,D,C）と数字（1〜13）の組み合わせでカードを指定してください。" unless @message == ""
 
     if @message == ""
       pockers = pocker_list.split(" ")
@@ -100,9 +99,6 @@ module PockersHelper
           "番目のカード指定文字が不正です。" +
           "(#{pocker})\n"
       end
-    end
-    unless respone_messages == ""
-      respone_messages += "半角英字大文字のスート（S,H,D,C）と数字（1〜13）の組み合わせでカードを指定してください。"
     end
     respone_messages
   end
