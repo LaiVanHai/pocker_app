@@ -1,80 +1,59 @@
 module PockersHelper
   def checkPockerHand(pocker_list)
-    s_array = [] #Arrayとして、Sカードのナンバーを保存する
-    h_array = [] #Arrayとして、Hカードのナンバーを保存する
-    d_array = [] #Arrayとして、Dカードのナンバーを保存する
-    c_array = [] #Arrayとして、Cカードのナンバーを保存する
     pocker_number_array = [] #５カードにナンバーを保存する
+    pocker_suit_hash = {} #Arrayとして、 各スートのナンバーを保存する
+    Settings.suit_list.each do |suit|
+      pocker_suit_hash[suit] = []
+      # S,H,C,D配列を作成する
+    end
 
-    @message = checkCardNumber(pocker_list)
-    return @message unless @message.blank?
+    #　カードの数枚を確認する
+    msg = "5つのカード指定文字を半角スペース区切りで入力してください。（例：S1 H3 D9 C13 S11)"
+    return msg if pocker_list.count(" ") != (Settings.number_card - 1)
 
-    @message = checkSuit(pocker_list)
-    @message += "半角英字大文字のスート（S,H,D,C）と数字（1〜13）の組み合わせでカードを指定してください。" unless @message.blank?
+    message = checkSuit(pocker_list)
+    # カードのスートを確認する
 
-    if @message.blank?
+    message += \
+      "半角英字大文字のスート（S,H,D,C）と数字（1〜13）の組み合わせでカードを指定してください。" \
+      unless message.blank?
+    # メッセージ内容を捕捉する
+
+    if message.blank?
       pockers = pocker_list.split(" ")
       pockers.each_with_index do |pocker, index|
         current_pocker_suit = pocker[0].upcase
         current_pocker_number = pocker.slice(1..2).to_i
-        case current_pocker_suit
-        when "S"
-          s_array.include?(current_pocker_number) ?
-            @message = "カードが重複しています。" :
-            s_array.push(current_pocker_number)
-          break unless @message.blank?
-        when "H"
-          h_array.include?(current_pocker_number) ?
-            @message = "カードが重複しています。" :
-            h_array.push(current_pocker_number)
-          break unless @message.blank?
-        when "D"
-          d_array.include?(current_pocker_number) ?
-            @message = "カードが重複しています。" :
-            d_array.push(current_pocker_number)
-          break unless @message.blank?
-        when "C"
-          c_array.include?(current_pocker_number) ?
-            @message = "カードが重複しています。" :
-            c_array.push(current_pocker_number)
-          break unless @message.blank?
-        end
+        pocker_suit_hash[current_pocker_suit].include?(current_pocker_number) ?
+          message = "カードが重複しています。" :
+          pocker_suit_hash[current_pocker_suit].push(current_pocker_number)
+        break unless message.blank?
       end
-      pocker_number_array = s_array + h_array + d_array + c_array
-      # end of check suit and number
-      if @message.blank?
+
+      if message.blank?
+        Settings.suit_list.each do |suit|
+          pocker_number_array += pocker_suit_hash[suit]
+        end
         all_pocker_number_continuous = checkArrayContinuous(pocker_number_array)
-        suit_arr = []
-        suit_arr.push(s_array)
-        suit_arr.push(h_array)
-        suit_arr.push(d_array)
-        suit_arr.push(c_array)
-        if checkAllCardTogetherWithSuit(suit_arr)
+        if checkAllCardTogetherWithSuit(pocker_suit_hash)
           all_pocker_number_continuous ?
-            @message = "ストレートフラッシュ" :
-            @message = "フラッシュ"
+            message = "ストレートフラッシュ" :
+            message = "フラッシュ"
         else #different suit
           all_pocker_number_continuous ?
-            @message = "ストレート" :
-            @message = checkGroup(pocker_number_array)
+            message = "ストレート" :
+            message = checkGroup(pocker_number_array)
         end
       end
     end
-    @message
+    message
   end
 
   def checkAllCardTogetherWithSuit(suit_arr)
-    suit_arr.each do |suit|
-      return true if suit.count == Settings.number_card
+    Settings.suit_list.each do |suit|
+      return true if suit_arr[suit].count == Settings.number_card
     end
     false
-  end
-
-  def checkCardNumber(pocker_list)
-    #Pockerの５枚を足りるかどうか確認する
-    @message = "5つのカード指定文字を半角スペース区切りで入力してください。（例：S1 H3 D9 C13 S11)"
-    return @message unless pocker_list.count(" ") == 4
-    ""
   end
 
   def checkSuit(pocker_list)
@@ -95,10 +74,11 @@ module PockersHelper
   def checkArrayContinuous(array_number)
     # array_numberは連続配列かどうか確認する
     arr = array_number.sort
+    loop_length = Settings.number_card - 2
     # 配列は順番通りに片付ける
     return true if arr[0] == 1 &&  arr[1] == 10
       # そんなケースを確認する：[1,13,12,11,10]
-    for i in 0..3
+    for i in 0..loop_length
       return false if arr[i+1] - arr[i] != 1
     end
     true
