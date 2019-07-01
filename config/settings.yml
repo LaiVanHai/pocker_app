@@ -9,3 +9,6 @@ suits: [
   "ワンペア",
   "ハイカード"
   ]
+
+number_card: 5
+suit_list: ["S", "H", "C", "D"]
