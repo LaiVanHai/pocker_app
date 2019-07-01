@@ -2,32 +2,25 @@ require 'rails_helper'
 
 RSpec.describe PockersHelper, type: :helper do
   describe "checkCardNumber" do
-    context "When card number is correct" do
-      it "Pocker hand true" do
-        pocker_list = "C7 C6 C5 C4 C3"
-        expect(helper.checkCardNumber(pocker_list)).to eq ""
-      end
-    end
-
     context "When card number is wrong" do
       before { @error_msg = "5つのカード指定文字を半角スペース区切りで入力してください。（例：S1 H3 D9 C13 S11)" }
       it "Card number less than standard amount" do
         pocker_list = "C7 C6 C5"
-        expect(helper.checkCardNumber(pocker_list)).to eq @error_msg
+        expect(helper.checkPockerHand(pocker_list)).to eq @error_msg
       end
 
       it "Card number more than standard amount" do
         pocker_list = "C7 C6 C5 C9 C10 C11"
-        expect(helper.checkCardNumber(pocker_list)).to eq @error_msg
+        expect(helper.checkPockerHand(pocker_list)).to eq @error_msg
       end
 
       it "The card number is correct but there is a strange keyword between each card" do
         pocker_list = "C7  C6 C5 C9 C10"
-        expect(helper.checkCardNumber(pocker_list)).to eq @error_msg
-        pocker_list2 = "C7 C6 C5 C9 C10  "
-        expect(helper.checkCardNumber(pocker_list2)).to eq @error_msg
-        pocker_list2 = "  C7 C6 C5 C9 C10"
-        expect(helper.checkCardNumber(pocker_list2)).to eq @error_msg
+        expect(helper.checkPockerHand(pocker_list)).to eq @error_msg
+        pocker_list2 = "c7 C6 C5 C9 C10  "
+        expect(helper.checkPockerHand(pocker_list2)).to eq @error_msg
+        pocker_list2 = "  C7 C6 C5 d9 C10"
+        expect(helper.checkPockerHand(pocker_list2)).to eq @error_msg
       end
     end
   end
@@ -35,7 +28,7 @@ RSpec.describe PockersHelper, type: :helper do
   describe "checkSuit" do
     context "When pocker hand is correct" do
       it "Pocker hand true" do
-        pocker_list = "C7 C6 C5 C4 C3"
+        pocker_list = "c7 C6 c5 C4 C3"
         expect(helper.checkSuit(pocker_list)).to eq ""
       end
     end
