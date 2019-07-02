@@ -23,7 +23,7 @@ module API
               result["hand"] = suit_result
               suit_result_index = Settings.suits.index(suit_result)
               result["best"] = false
-              min = suit_result_index unless min < suit_result_index
+              min = suit_result_index if min > suit_result_index
               all_result_normal.push(result)
             else
               suit_result.split("\n").each do |suit_rel|
