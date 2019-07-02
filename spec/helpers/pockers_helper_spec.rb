@@ -25,37 +25,37 @@ RSpec.describe PockersHelper, type: :helper do
     end
   end
 
-  describe "checkSuit" do
+  describe "checkPockerHand" do
     context "When pocker hand is correct" do
       it "Pocker hand true" do
         pocker_list = "c7 C6 c5 C4 C3"
-        expect(helper.checkSuit(pocker_list)).to eq ""
+        expect(helper.checkPockerHand(pocker_list)).to eq "ストレートフラッシュ"
       end
     end
 
     context "When pocker hand is wrong" do
       it "Card suit is wrong - T7 Card" do
         pocker_list = "T7 C6 C5 C9 C10"
-        error_msg = "1番目のカード指定文字が不正です。(T7)\n"
-        expect(helper.checkSuit(pocker_list)).to eq error_msg
+        error_msg = "1番目のカード指定文字が不正です。(T7)\n半角英字大文字のスート（S,H,D,C）と数字（1〜13）の組み合わせでカードを指定してください。"
+        expect(helper.checkPockerHand(pocker_list)).to eq error_msg
       end
 
       it "Card suit is wrong - T7,T8 Card" do
         pocker_list = "T7 C6 C5 C9 T8"
-        error_msg = "1番目のカード指定文字が不正です。(T7)\n5番目のカード指定文字が不正です。(T8)\n"
-        expect(helper.checkSuit(pocker_list)).to eq error_msg
+        error_msg = "1番目のカード指定文字が不正です。(T7)\n5番目のカード指定文字が不正です。(T8)\n半角英字大文字のスート（S,H,D,C）と数字（1〜13）の組み合わせでカードを指定してください。"
+        expect(helper.checkPockerHand(pocker_list)).to eq error_msg
       end
 
       it "Card number is wrong - T70 Card" do
         pocker_list = "T70 C6 C5 C9 C10"
-        error_msg = "1番目のカード指定文字が不正です。(T70)\n"
-        expect(helper.checkSuit(pocker_list)).to eq error_msg
+        error_msg = "1番目のカード指定文字が不正です。(T70)\n半角英字大文字のスート（S,H,D,C）と数字（1〜13）の組み合わせでカードを指定してください。"
+        expect(helper.checkPockerHand(pocker_list)).to eq error_msg
       end
 
       it "Card number is wrong - T70, C50 Card" do
         pocker_list = "T70 C6 C50 C9 C10"
-        error_msg = "1番目のカード指定文字が不正です。(T70)\n3番目のカード指定文字が不正です。(C50)\n"
-        expect(helper.checkSuit(pocker_list)).to eq error_msg
+        error_msg = "1番目のカード指定文字が不正です。(T70)\n3番目のカード指定文字が不正です。(C50)\n半角英字大文字のスート（S,H,D,C）と数字（1〜13）の組み合わせでカードを指定してください。"
+        expect(helper.checkPockerHand(pocker_list)).to eq error_msg
       end
     end
   end

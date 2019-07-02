@@ -7,44 +7,49 @@ module PockersHelper
       # S,H,C,D配列を作成する
     end
 
+    message = validation(pocker_list, pocker_suit_hash)
+    return message if message.present?
+
+    Settings.suit_list.each do |suit|
+      pocker_number_array += pocker_suit_hash[suit]
+    end
+    all_pocker_number_continuous = checkArrayContinuous(pocker_number_array)
+
+    if checkAllCardTogetherWithSuit(pocker_suit_hash)
+      all_pocker_number_continuous ?
+        message = "ストレートフラッシュ" :
+        message = "フラッシュ"
+    else #different suit
+      all_pocker_number_continuous ?
+        message = "ストレート" :
+        message = checkGroup(pocker_number_array)
+    end
+    message
+  end
+
+  private
+
+  def validation(pocker_list, pocker_suit_hash)
     #　カードの数枚を確認する
     msg = "5つのカード指定文字を半角スペース区切りで入力してください。（例：S1 H3 D9 C13 S11)"
     return msg if pocker_list.count(" ") != (Settings.number_card - 1)
 
     message = checkSuit(pocker_list)
     # カードのスートを確認する
-
     message += \
       "半角英字大文字のスート（S,H,D,C）と数字（1〜13）の組み合わせでカードを指定してください。" \
-      unless message.blank?
+      if message.present?
     # メッセージ内容を捕捉する
+    return message if message.present?
 
-    if message.blank?
-      pockers = pocker_list.split(" ")
-      pockers.each_with_index do |pocker, index|
-        current_pocker_suit = pocker[0].upcase
-        current_pocker_number = pocker.slice(1..2).to_i
-        pocker_suit_hash[current_pocker_suit].include?(current_pocker_number) ?
-          message = "カードが重複しています。" :
-          pocker_suit_hash[current_pocker_suit].push(current_pocker_number)
-        break unless message.blank?
-      end
-
-      if message.blank?
-        Settings.suit_list.each do |suit|
-          pocker_number_array += pocker_suit_hash[suit]
-        end
-        all_pocker_number_continuous = checkArrayContinuous(pocker_number_array)
-        if checkAllCardTogetherWithSuit(pocker_suit_hash)
-          all_pocker_number_continuous ?
-            message = "ストレートフラッシュ" :
-            message = "フラッシュ"
-        else #different suit
-          all_pocker_number_continuous ?
-            message = "ストレート" :
-            message = checkGroup(pocker_number_array)
-        end
-      end
+    pockers = pocker_list.split(" ")
+    pockers.each_with_index do |pocker, index|
+      current_pocker_suit = pocker[0].upcase
+      current_pocker_number = pocker.slice(1..2).to_i
+      pocker_suit_hash[current_pocker_suit].include?(current_pocker_number) ?
+        message = "カードが重複しています。" :
+        pocker_suit_hash[current_pocker_suit].push(current_pocker_number)
+      break if message.present?
     end
     message
   end
