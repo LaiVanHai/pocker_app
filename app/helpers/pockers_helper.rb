@@ -24,21 +24,26 @@ module PockersHelper
         message = "ストレート" :
         message = checkGroup(pocker_number_array)
     end
-    message
+    return message.strip
   end
 
   private
 
   def validation(pocker_list, pocker_suit_hash)
     #　カードの数枚を確認する
-    msg = "5つのカード指定文字を半角スペース区切りで入力してください。（例：S1 H3 D9 C13 S11)"
-    return msg if pocker_list.count(" ") != (Settings.number_card - 1)
+    # msg = "5つのカード指定文字を半角スペース区切りで入力してください。（例：S1 H3 D9 C13 S11)"
+    # return msg if pocker_list.count(" ") != (Settings.number_card - 1)
+    message = ""
+    message = "5つのカード指定文字を半角スペース区切りで入力してください。（例：S1 H3 D9 C13 S11)" \
+      if pocker_list.count(" ") != (Settings.number_card - 1)
 
-    message = checkSuit(pocker_list)
+    msg = checkSuit(pocker_list)
+    message += "\n" if message.present?
+    message += msg if msg.present?
     # カードのスートを確認する
-    message += \
-      "半角英字大文字のスート（S,H,D,C）と数字（1〜13）の組み合わせでカードを指定してください。" \
-      if message.present?
+    # message += \
+    #   "半角英字大文字のスート（S,H,D,C）と数字（1〜13）の組み合わせでカードを指定してください。" \
+    #   if message.present?
     # メッセージ内容を捕捉する
     return message if message.present?
 
@@ -51,7 +56,8 @@ module PockersHelper
         pocker_suit_hash[current_pocker_suit].push(current_pocker_number)
       break if message.present?
     end
-    message
+
+    return message.strip
   end
 
   def checkAllCardTogetherWithSuit(suit_arr)
@@ -73,6 +79,9 @@ module PockersHelper
           "(#{pocker})\n"
       end
     end
+    respone_messages += "半角英字大文字のスート（S,H,D,C）と数字（1〜13）の組み合わせでカードを指定してください。" \
+      if respone_messages.present?
+
     respone_messages
   end
 

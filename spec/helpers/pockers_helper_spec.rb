@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe PockersHelper, type: :helper do
   describe "checkCardNumber" do
     context "When card number is wrong" do
-      before { @error_msg = "5つのカード指定文字を半角スペース区切りで入力してください。（例：S1 H3 D9 C13 S11)" }
+      before { @error_msg = "5つのカード指定文字を半角スペース区切りで入力してください。（例：S1 H3 D9 C13 S11)\n" }
       it "Card number less than standard amount" do
         pocker_list = "C7 C6 C5"
         expect(helper.checkPockerHand(pocker_list)).to eq @error_msg
