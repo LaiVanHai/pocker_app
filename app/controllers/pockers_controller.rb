@@ -1,13 +1,13 @@
 class PockersController < ApplicationController
 
-  include PockersHelper
+  include Pokers::CheckService
 
   def top
   end
 
   def check
     @pocker_card = params[:card_list]
-    @message = checkPockerHand(@pocker_card)
+    @message = Pokers::CheckService.checkPockerHand(@pocker_card)
     render("pockers/top")
   end
 

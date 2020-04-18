@@ -1,6 +1,7 @@
 module API
   module V1
     class Pockers < Grape::API
+      include Pokers::CheckService
       version 'v1', using: :header, vendor: 'api'
       format :json
       params do
@@ -14,9 +15,8 @@ module API
           all_result_wrong = [] #異常結果を保存する配列
           min = 10;
           msg= {} #返却データ
-          pocker_controller = PockersController.new
           params[:cards].each do |card|
-            suit_result = pocker_controller.checkPockerHand(card)
+            suit_result = Pokers::CheckService.checkPockerHand(card)
             if Settings.suits.include?(suit_result)
               result = {} #Hashで一つのカードの処理結果を保存する
               result["card"] = card
