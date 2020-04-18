@@ -1,0 +1,15 @@
+current directory: /Users/v.lai/haibka/atone/pocker_app/vendor/bundle/ruby/2.6.0/gems/bindex-0.7.0/ext/skiptrace
+/Users/v.lai/.rvm/rubies/ruby-2.6.1/bin/ruby -I /Users/v.lai/.rvm/rubies/ruby-2.6.1/lib/ruby/site_ruby/2.6.0 -r ./siteconf20200418-58053-nlyngv.rb extconf.rb
+creating Makefile
+
+current directory: /Users/v.lai/haibka/atone/pocker_app/vendor/bundle/ruby/2.6.0/gems/bindex-0.7.0/ext/skiptrace
+make "DESTDIR=" clean
+
+current directory: /Users/v.lai/haibka/atone/pocker_app/vendor/bundle/ruby/2.6.0/gems/bindex-0.7.0/ext/skiptrace
+make "DESTDIR="
+compiling cruby.c
+linking shared-object skiptrace/cruby.bundle
+
+current directory: /Users/v.lai/haibka/atone/pocker_app/vendor/bundle/ruby/2.6.0/gems/bindex-0.7.0/ext/skiptrace
+make "DESTDIR=" install
+/usr/local/opt/coreutils/bin/ginstall -c -m 0755 cruby.bundle ./.gem.20200418-58053-1w1plsy/skiptrace

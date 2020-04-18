@@ -1,0 +1,15 @@
+current directory: /Users/v.lai/haibka/atone/pocker_app/vendor/bundle/ruby/2.6.0/gems/bootsnap-1.4.4/ext/bootsnap
+/Users/v.lai/.rvm/rubies/ruby-2.6.1/bin/ruby -I /Users/v.lai/.rvm/rubies/ruby-2.6.1/lib/ruby/site_ruby/2.6.0 -r ./siteconf20200418-58053-19baa96.rb extconf.rb
+creating Makefile
+
+current directory: /Users/v.lai/haibka/atone/pocker_app/vendor/bundle/ruby/2.6.0/gems/bootsnap-1.4.4/ext/bootsnap
+make "DESTDIR=" clean
+
+current directory: /Users/v.lai/haibka/atone/pocker_app/vendor/bundle/ruby/2.6.0/gems/bootsnap-1.4.4/ext/bootsnap
+make "DESTDIR="
+compiling bootsnap.c
+linking shared-object bootsnap/bootsnap.bundle
+
+current directory: /Users/v.lai/haibka/atone/pocker_app/vendor/bundle/ruby/2.6.0/gems/bootsnap-1.4.4/ext/bootsnap
+make "DESTDIR=" install
+/usr/local/opt/coreutils/bin/ginstall -c -m 0755 bootsnap.bundle ./.gem.20200418-58053-rygzgr/bootsnap
